@@ -25,6 +25,7 @@ def apply_defaults(**kwargs) -> dict:
 
     if 'mode' not in kwargs.keys():
         kwargs['mode'] = 'office'
+        print(f'Mode not specified - defaulting to {kwargs["mode"]}')
     
     if 'apikey' not in kwargs.keys():
         
