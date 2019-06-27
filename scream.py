@@ -1,4 +1,5 @@
 import sys
+from src.request.request import proto_get_alerts
 
 def sanitize_input(**kwargs) -> dict:
 
@@ -25,7 +26,7 @@ def apply_defaults(**kwargs) -> dict:
 
     if 'mode' not in kwargs.keys():
         kwargs['mode'] = 'office'
-        print(f'Mode not specified - defaulting to {kwargs["mode"]}')
+        print(f'Mode not specified - defaulting to \'{kwargs["mode"]}\'')
     
     if 'apikey' not in kwargs.keys():
         
@@ -49,6 +50,9 @@ def main(**kwargs):
     
     print('Runtime settings:')
     [print(f'\t{key}={value}') for key, value in kwargs.items()]
+
+    proto_get_alerts(api_key=kwargs['apikey'])
+    
 
 if __name__ == '__main__':
 
