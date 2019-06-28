@@ -1,5 +1,7 @@
 import sys
-from src.request.request import proto_get_alerts
+import json
+
+from src.request.request import Alert
 
 def sanitize_input(**kwargs) -> dict:
 
@@ -50,8 +52,12 @@ def main(**kwargs):
     
     print('Runtime settings:')
     [print(f'\t{key}={value}') for key, value in kwargs.items()]
+    print('')
 
-    proto_get_alerts(api_key=kwargs['apikey'])
+    alerts = Alert.list_alerts(api_key=kwargs['apikey'])
+    
+    [print(alert) for alert in alerts]
+
     
 
 if __name__ == '__main__':
