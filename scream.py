@@ -54,11 +54,20 @@ def main(**kwargs):
     [print(f'\t{key}={value}') for key, value in kwargs.items()]
     print('')
 
-    alerts = Alert.list_alerts(api_key=kwargs['apikey'])
+    # alerts = Alert.get_alert_list(api_key=kwargs['apikey'])
     
-    [print(alert) for alert in alerts]
+    # [print(alert) for alert in alerts]
 
-    
+    example_alert = Alert.get_alert_by_identifier(
+        api_key=kwargs['apikey'],
+        id_type='id',
+        id_value='3fe25743-c233-456d-8d9d-5c28ae144735-1561360443878'
+        )
+
+    print(example_alert)
+
+    example_count = Alert.get_alert_count(api_key=kwargs['apikey'])
+    print(example_count)
 
 if __name__ == '__main__':
 

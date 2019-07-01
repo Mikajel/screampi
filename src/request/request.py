@@ -1,6 +1,6 @@
 import requests
 
-dummy_alert_link = 'https://api.eu.opsgenie.com/v2/alerts/'
+dummy_alert_link = 'https://api.eu.opsgenie.com/v2/alerts'
 
 
 class Alert(object):
@@ -62,14 +62,41 @@ class Alert(object):
         return __str
 
     @staticmethod
-    def get_alert(api_key: str, id: int):
-        pass
-
-    @staticmethod
-    def list_alerts(api_key: str) -> []:
-        """Get list of alerts from API, construct object from them and return them"""
+    def get_alert_by_identifier(api_key: str, id_type: str, id_value: str) -> object:
+        """
+        Get alert from API by its id, construct object from it and return Alert
+        """
 
         headers = {'Authorization': 'GenieKey ' + api_key}
-        r = requests.get(dummy_alert_link, headers=headers)
+        response = requests.get(
+            url=dummy_alert_link + f'/{id_value}?identifierType={id_type}', 
+            headers=headers
+            )
 
-        return [Alert(alert_data=alert_data) for alert_data in r.json()['data']]
+        print(response.json())
+        return Alert(response.json()['data'])
+
+    @staticmethod
+    def get_alert_list(api_key: str) -> []:
+        """
+        Get list of alerts from API, construct object from them and return them
+        TODO: querying for server-side filtering
+        """
+
+        headers = {'Authorization': 'GenieKey ' + api_key}
+        response = requests.get(dummy_alert_link, headers=headers)
+
+        return [Alert(alert_data=alert_data) for alert_data in response.json()['data']]
+
+    @staticmethod
+    def get_alert_count(api_key: str) -> int:
+        """
+        Get amount of existing alerts
+        TODO: querying for server-side filtering[searchIdentifier/searchIdentifierType] (https://docs.opsgenie.com/docs/alert-api#section-count-alerts)
+        """
+
+        headers = {'Authorization': 'GenieKey ' + api_key}
+        response = requests.get(dummy_alert_link + '/count', headers=headers)
+
+        print(response.json())
+        return response.json()['data']['count']
