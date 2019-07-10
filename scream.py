@@ -2,6 +2,7 @@ import sys
 import json
 
 from src.request.request import Alert
+from src.sound.sound import sound_test
 
 def sanitize_input(**kwargs) -> dict:
 
@@ -58,16 +59,18 @@ def main(**kwargs):
     
     # [print(alert) for alert in alerts]
 
-    example_alert = Alert.get_alert_by_identifier(
-        api_key=kwargs['apikey'],
-        id_type='id',
-        id_value='3fe25743-c233-456d-8d9d-5c28ae144735-1561360443878'
-        )
+    # example_alert = Alert.get_alert_by_identifier(
+    #     api_key=kwargs['apikey'],
+    #     id_type='id',
+    #     id_value='3fe25743-c233-456d-8d9d-5c28ae144735-1561360443878'
+    #     )
 
-    print(example_alert)
+    # print(example_alert)
 
-    example_count = Alert.get_alert_count(api_key=kwargs['apikey'])
-    print(example_count)
+    # example_count = Alert.get_alert_count(api_key=kwargs['apikey'])
+    # print(example_count)
+
+    sound_test()
 
 if __name__ == '__main__':
 
