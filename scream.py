@@ -1,4 +1,7 @@
 import sys
+import json
+
+from src.request.request import Alert
 
 def sanitize_input(**kwargs) -> dict:
 
@@ -25,7 +28,7 @@ def apply_defaults(**kwargs) -> dict:
 
     if 'mode' not in kwargs.keys():
         kwargs['mode'] = 'office'
-        print(f'Mode not specified - defaulting to {kwargs["mode"]}')
+        print(f'Mode not specified - defaulting to \'{kwargs["mode"]}\'')
     
     if 'apikey' not in kwargs.keys():
         
@@ -49,6 +52,22 @@ def main(**kwargs):
     
     print('Runtime settings:')
     [print(f'\t{key}={value}') for key, value in kwargs.items()]
+    print('')
+
+    # alerts = Alert.get_alert_list(api_key=kwargs['apikey'])
+    
+    # [print(alert) for alert in alerts]
+
+    example_alert = Alert.get_alert_by_identifier(
+        api_key=kwargs['apikey'],
+        id_type='id',
+        id_value='3fe25743-c233-456d-8d9d-5c28ae144735-1561360443878'
+        )
+
+    print(example_alert)
+
+    example_count = Alert.get_alert_count(api_key=kwargs['apikey'])
+    print(example_count)
 
 if __name__ == '__main__':
 
